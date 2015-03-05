@@ -1,0 +1,45 @@
+<project name="CSC380-P1-Konane" default="compile" basedir=".">
+	<description>ANT Build file for Project 1.</description>
+	
+	<property name="src" location="." />
+	<property name="build_dir" location="." />
+	<property name="dist" location="dist" />
+	<property environment="env" />
+	
+	<target name="compile" depends="clean">
+		<mkdir dir="${build_dir}" />
+		<javac srcdir="${src}" destdir="${build_dir}">
+		</javac>
+	</target>
+	
+	<target name="clean">
+		<delete>
+			<fileset dir="${build_dir}" includes="Arbiter.class" />
+            <fileset dir="${build_dir}" includes="Board.class" />
+            <fileset dir="${build_dir}" includes="MinimaxPlayer.class" />
+            <fileset dir="${build_dir}" includes="RandomPlayer.class" />
+            <fileset dir="${build_dir}" includes="./bin/*.class" />
+            <fileset dir="${build_dir}" includes="./bin/build.xml" />
+			<fileset dir="${build_dir}" includes="*.*~" />
+		</delete>
+		<delete dir="${build_dir}/META-INF" failonerror="false"/>
+	</target>
+	
+	<target name="author">
+		<echo message="Kevin Bohinski"/>
+	</target>
+	
+	<target name="run" depends="compile, author">
+		<java classname="Arbiter" classpath="." fork="yes">
+		</java>
+	</target>
+	
+	<target name="jar">
+		<antcall target="clean">
+		</antcall>
+		<antcall target="compile">
+		</antcall>
+		<jar jarfile="./bohinsk1--p1Konane.jar" includes="/players/DumbPlayer.class /players/SmartPlayer.class **/*.java/** **/*.pdf/** **/*.xml/**" basedir="." />
+	</target>
+	
+</project>
